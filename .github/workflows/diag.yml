@@ -1,0 +1,27 @@
+name: Diagnostic Muncitor
+on: workflow_dispatch
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: testeaza header-ele spre Hydra
+        run: |
+          python3 - <<'EOF'
+          import urllib.request, json
+          url = "https://hidra-smart-core.base44.app/functions/hydraMuncitorPSIE"
+          payload = json.dumps({"action":"stare"}).encode()
+          def incerc(headers, nume):
+              try:
+                  req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      print(nume, "OK", r.status, r.read().decode()[:200])
+              except Exception as e:
+                  try:
+                      corp = e.read().decode('utf-8','replace')[:800]
+                  except Exception:
+                      corp = str(e)
+                  print(nume, "FAIL", getattr(e, 'code', 0), ' '.join(corp.split())[:800])
+          incerc({"Content-Type":"application/json","User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36","Accept":"application/json"},"browser_ua")
+          incerc({"Content-Type":"application/json","User-Agent":"psie-worker/2.0"},"psie_ua")
+          incerc({"Content-Type":"application/json"},"python_default")
+          EOF
