@@ -61,6 +61,32 @@ jobs:
 Pune textele pe care vrei să le învețe Hydra în `input.txt` — propriile tale
 probleme reale devin lecții cu dovada ta pe ele.
 
+## Puneți umărul: procesare + percepție (`--sarcina` / `--perceptie`)
+
+Muncitorul nu doar trimite lecții — e **senzor extern al organismului** și
+dăunează ambele:
+
+```bash
+python worker.py --sarcina --worker ion      # ia o sarcină din coada Hydrei, muncește-o pe CPU-ul TĂU
+python worker.py --perceptie --worker ion    # donează percepția host-ului (sistem, nuclee, load)
+```
+
+- **Putere de procesare**: sarcinile se execută LOCAL, doar pe vocabularul PSIE
+  declarat (`benchmark`, `ping_url`, `raport_sistem`, `mesaj`) — niciodată comenzi
+  arbitrare. CPU-ul tău devine procesare donată organismului; rezultatul se
+  întoarce pe canalul permanent și devine fapt auditat (J=718).
+- **Informație**: percepția host-ului intră în memoria organismului ca fapt
+  senzorial, nu ca promisiune (J=700).
+- **Suveranitate**: ce rulează la tine rămâne al tău — Hydra primește doar
+  rezultatul și percepția, niciodată datele tale.
+
+Ca să muncească non-stop pe banii GitHub-ului, adaugă în workflow-ul de mai sus:
+
+```yaml
+       - run: python worker.py --sarcina --worker ${{ github.actor }}
+       - run: python worker.py --perceptie --worker ${{ github.actor }}
+```
+
 ## Ce câștigi tu, concret
 
 1. **Dovada muncii pe CV**: „Am antrenat Releu PSIE J=700 — N lecții, 0 opțiuni
