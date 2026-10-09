@@ -60,9 +60,11 @@ def triunghi(cerere_bruta):
 
 
 def post(url, payload):
+    # UA propriu canonic: protectorul Cloudflare al platformei refuză UA-urile
+    # implicite de bibliotecă; muncitorul PSIE se prezintă pe nume (asumare).
     cerere = urllib.request.Request(
         url, data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"}, method="POST"
+        headers={"Content-Type": "application/json", "User-Agent": "psie-worker/2.0"}, method="POST"
     )
     try:
         with urllib.request.urlopen(cerere, timeout=30) as raspuns:
