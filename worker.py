@@ -64,8 +64,12 @@ def post(url, payload):
         url, data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json"}, method="POST"
     )
-    with urllib.request.urlopen(cerere, timeout=30) as raspuns:
-        return json.loads(raspuns.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(cerere, timeout=30) as raspuns:
+            return json.loads(raspuns.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        corp = e.read().decode("utf-8", "replace")[:500]
+        raise RuntimeError(f"[Muncitor] HTTP {e.code} de la Hydra: {corp}")
 
 
 def salveaza_receipt(receipt, fisier="lectii_locale.json"):
