@@ -1,0 +1,15 @@
+name: Muncitor PSIE
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # la fiecare 6 ore, pe banii GitHub-ului
+  workflow_dispatch:
+jobs:
+  munceste:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python worker.py --perceptie --worker github-actions
+      - run: python worker.py --sarcina --worker github-actions
+      - run: python worker.py --text "Muncitorul extern GitHub Actions a rulat, a donat percepția host-ului și a executat sarcini din coada organismului — substratul real al unui muncitor real" --worker github-actions
